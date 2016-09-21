@@ -1,19 +1,16 @@
 var request = require('superagent');
-var xtend = require('xtend');
-
-var DEFAULT_SERVER = 'https://app.satismeter.com';
 
 class Client {
   constructor({
     writeKey,
-    server = DEFAULT_SERVER
+    server = 'https://app.satismeter.com'
   } = {}) {
     this.writeKey = writeKey;
     this.server = server;
   }
 
   survey(options, callback) {
-    var survey = new Survey(xtend(options, {client: this}));
+    var survey = new Survey(Object.assign(options, {client: this}));
     survey.init(function(err, res) {
       if (err) {
         callback(err);
